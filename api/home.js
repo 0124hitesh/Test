@@ -5,6 +5,9 @@ const router = express.Router();
 const User = require('../models/dbHelper');
 
 router.get('/',(req,res) => {
+    User.getallitems().then(items => {
+        res.locals.items = items.slice(0,9);
+    })
     try {
         const id = req.session.userId;
         if (id) {
@@ -18,7 +21,7 @@ router.get('/',(req,res) => {
             console.log('no session home');
             User.getallitems().then(items => {
                 console.log(items[0]);
-                res.status(200).render('try.html',{items : items});
+                res.status(200).render('try.html',{items : items.slice(0,8)});
             })
             .catch(err => {
                 console.log('some error');
