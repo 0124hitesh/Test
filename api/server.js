@@ -105,6 +105,18 @@ server.post('/additems',(req,res) => {
   res.redirect('/additems');
 })
 
+server.get('/desc/:id',(req,res) => {
+  const {id} = req.params;
+
+  User.finditemByid(id).then(item => {
+    console.log(item);
+    res.status(200).render('item_desc.html',{item : item});
+  })
+  .catch(err => {
+    console.log('some wrong!');
+  })
+})
+
 
 server.get('/logout',redirectlogin, (req,res) => {
   req.session.destroy(err => {

@@ -82,11 +82,11 @@
 <body>
     <section>
         <article>
-            <img src="..\img\css.jpg" alt="dd">
+            <img src="/static/images/{{item['product_image']}}" alt="dd">
             
             <article id="item">
-                <p id="pn">Product Name</p>
-                <p id="cost">₹1000</p>
+                <p id="pn">{{item.product_name | title}}</p>
+                <p id="cost">₹{{item.product_price}}</p>
                 <button id="atc"><i class="fa fa-shopping-cart"></i>&nbsp ADD TO CART</button>
                 <br><br>
                 <button id="bn"><i class="fa fa-bolt" ></i>&nbsp BUY NOW</button>
