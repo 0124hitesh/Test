@@ -52,7 +52,7 @@ router.post('/',redirectlogin , (req,res) => {
         from : 'vegefoodz.cs19@gmail.com',
         to : data['email'],
         subject : data['subject'],
-        text : data['text']
+        text : `Thank you very much that you contacted us, we will try to respond to you soon.  Thank you!`
     };
     console.log(data['email']);
     transporter.sendMail(mailOptions , (err , info) => {
