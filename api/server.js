@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
-const flash = require('connect-flash');
+const flash = require('req-flash');
 
 const User = require('../models/dbHelper');
 
@@ -67,6 +67,7 @@ server.use(function(req, res, next) {
 
 
 // flash messages
+server.use(flash({ locals: 'flash' }));
 
 
 
@@ -89,6 +90,12 @@ server.use('/shop',require('./shop'));
 server.use('/cart',require('./cart'));
 server.use('/signin',require('./sign_in'));
 server.use('/signup',require('./sign_up'));
+
+server.get('/oom',(req,res) => {
+  req.flash('successMessage', 'You are successfully using req-flash');
+  console.log(res.locals['flash']);
+  res.render('OOPs.html');
+})
 
 server.get('/additems',(req,res) => {
   return res.render('index2.html');
