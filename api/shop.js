@@ -14,6 +14,12 @@ const redirectlogin = (req,res,next) => {
 }
 
 router.get('/',redirectlogin,(req,res) => {
+    User.getallitems().then(items => {
+        res.locals.items = items;
+    })
+    .catch(err => {
+        console.log('some wrong');
+    })
     User.findByid(req.session.userId).then(authuser => {
         const user = {id:authuser.id, email : authuser.email, name:authuser.first_name + ' ' + authuser.last_name };
         console.log(user['name']);
