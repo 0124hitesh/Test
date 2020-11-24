@@ -6,7 +6,7 @@ const User = require('../models/dbHelper');
 
 router.get('/',(req,res) => {
     User.getallitems().then(items => {
-        res.locals.items = items.slice(0,9);
+        res.locals.items = items.slice(0,8);
     })
     try {
         const id = req.session.userId;
