@@ -4,7 +4,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
-const flash = require('req-flash');
+// const flash = require('req-flash');
+
+const flash = require('express-flash');
 
 const User = require('../models/dbHelper');
 
@@ -67,7 +69,7 @@ server.use(function(req, res, next) {
 
 
 // flash messages
-server.use(flash({ locals: 'flash' }));
+// server.use(flash({ locals: 'flash' }));
 
 
 

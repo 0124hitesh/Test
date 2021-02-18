@@ -15,6 +15,7 @@ const redirecthome = (req,res,next) => {
 }
 
 router.get('/',redirecthome,(req,res) => {
+    
     res.status(200).render('sign_in.html');
 });
 
@@ -22,6 +23,7 @@ router.post('/',redirecthome,(req,res) => {
     const user = req.body;
     if(user['name'] === '' || user['password'] === ''){
         
+        console.log(res.locals);
         return res.status(303).redirect('/signin');
     }
     User.findByemail(user['name']).then(authUser => {
