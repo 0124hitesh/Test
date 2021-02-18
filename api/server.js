@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 const session = require('express-session');
-const flash = require('connect-flash');
+const flash = require('req-flash');
 
 const User = require('../models/dbHelper');
 
@@ -67,6 +67,7 @@ server.use(function(req, res, next) {
 
 
 // flash messages
+server.use(flash({ locals: 'flash' }));
 
 
 
@@ -89,20 +90,44 @@ server.use('/shop',require('./shop'));
 server.use('/cart',require('./cart'));
 server.use('/signin',require('./sign_in'));
 server.use('/signup',require('./sign_up'));
+server.use('/panel',require('./admin'));
+server.use('/additems',require('./addItems'));
+server.use('/selectItem',require('./selectItem'));
+server.use('/removeItem',require('./removeItem'));
 
-server.get('/additems',(req,res) => {
-  return res.render('index2.html');
-})
 
-server.post('/additems',(req,res) => {
-  const data = req.body;
-  User.additems(data).then(item => {
+
+// server.get('/oom',(req,res) => {
+//   req.flash('successMessage', 'You are successfully using req-flash');
+//   console.log(res.locals['flash']);
+//   res.render('OOPs.html');
+// })
+
+// server.get('/additems',(req,res) => {
+//   return res.render('index2.html');
+// })
+
+// server.post('/additems',(req,res) => {
+//   const data = req.body;
+//   User.additems(data).then(item => {
+//     console.log(item);
+//   })
+//   .catch(err => {
+//     console.log('some wrong')
+//   })
+//   res.redirect('/additems');
+// })
+
+server.get('/desc/:id',(req,res) => {
+  const {id} = req.params;
+
+  User.finditemByid(id).then(item => {
     console.log(item);
+    res.status(200).render('item_desc.html',{item : item});
   })
   .catch(err => {
-    console.log('some wrong')
+    console.log('some wrong!');
   })
-  res.redirect('/additems');
 })
 
 

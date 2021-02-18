@@ -5,7 +5,9 @@ module.exports = {
     findByemail,
     findByid,
     additems,
-    getallitems
+    getallitems,
+    finditemByid,
+    findadminByemail
 }
 
 
@@ -31,4 +33,12 @@ function findByemail(email) {
 
 function findByid(id) {
     return db('users').where({id: id}).first();
+}
+
+function finditemByid(id){
+    return db('items').where({product_id : id}).first();
+}
+
+function findadminByemail(email){
+    return db('admin').where({email : email}).first();
 }

@@ -4,6 +4,27 @@ const router = express.Router();
 
 const User = require('../models/dbHelper');
 
+const nodemailer = require('nodemailer');
+
+
+const transporter = nodemailer.createTransport({
+    service : 'gmail',
+    auth : {
+        user : 'vegefoodz.cs19@gmail.com',
+        pass : '1935shubh1935'
+    }
+});
+
+
+const redirectlogin = (req,res,next) => {
+    if (!req.session.userId) {
+        res.redirect('/signin');
+    }
+    else{
+        next();
+    }
+}
+
 router.get('/',(req,res) => {
     try{
         const id = req.session.userId;
@@ -22,6 +43,27 @@ router.get('/',(req,res) => {
     catch(err){
         res.status(500).send("some wrong");
     }
+})
+
+router.post('/',redirectlogin , (req,res) => {
+    const data = req.body;
+    console.log(data);
+    var mailOptions = {
+        from : 'vegefoodz.cs19@gmail.com',
+        to : data['email'],
+        subject : data['subject'],
+        text : `Thank you very much that you contacted us, we will try to respond to you soon.  Thank you!`
+    };
+    console.log(data['email']);
+    transporter.sendMail(mailOptions , (err , info) => {
+        if (err) {
+            console.log(err);
+        }
+        else{
+            console.log('Email send : ' + info.response);
+        }
+    })
+    res.status(200).redirect('/contact');
 })
 
 module.exports = router;

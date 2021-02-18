@@ -25,6 +25,7 @@ router.post('/',redirecthome,(req,res) => {
             bcrypt.compare(user['password'], authUser['password'], function(err, result) {
                 if (result == true){
                     req.session.userId = authUser.id;
+                    req.session.cart = [];
                     return res.status(200).redirect('/shop');
                 }
                 else{

@@ -19,8 +19,13 @@ router.get('/',redirectlogin,(req,res) => {
 
     User.findByid(id).then(authUser => {
         const user = {id : authUser.id, name : authUser.first_name +' '+ authUser.last_name, email : authUser.email};
+        const cartD = req.session.cart;
+        
+      
         console.log(user['name']);
-        res.status(200).render('cart.html',{user});
+        console.log("cartD--",cartD);
+        
+        res.status(200).render('cart.html',{user,cartD});
     })
     .catch(error => {
         res.status(500).send('something get wrong');

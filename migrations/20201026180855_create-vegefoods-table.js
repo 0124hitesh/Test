@@ -1,3 +1,4 @@
+const { table } = require("../dbConfig");
 
 exports.up = function (knex) {
     return knex.schema.createTable('users', table => {
@@ -16,10 +17,15 @@ exports.up = function (knex) {
         table.string('product_image').notNullable();
         table.integer('quantity').notNullable(); 
     })
+    .createTable('admin',table => {
+        table.increments('id').primary();
+        table.string('email').unique().notNullable();
+        table.string('password').notNullable();
+    })
     
 
 };
 
 exports.down = function (knex) {
-    return knex.schema.dropTableIfExists('users').dropTableIfExists('items');
+    return knex.schema.dropTableIfExists('users').dropTableIfExists('items').dropTableIfExists('admin');
 };
