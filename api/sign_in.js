@@ -20,6 +20,10 @@ router.get('/',redirecthome,(req,res) => {
 
 router.post('/',redirecthome,(req,res) => {
     const user = req.body;
+    if(user['name'] === '' || user['password'] === ''){
+        
+        return res.status(303).redirect('/signin');
+    }
     User.findByemail(user['name']).then(authUser => {
         if (authUser) {
             bcrypt.compare(user['password'], authUser['password'], function(err, result) {
